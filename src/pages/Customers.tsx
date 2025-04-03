@@ -128,193 +128,191 @@ const Customers = () => {
 
         <Card>
           <CardHeader>
-            <Tabs defaultValue="all">
-              <div className="flex items-center justify-between">
-                <CardTitle>Liste des clients</CardTitle>
-                <TabsList>
-                  <TabsTrigger value="all">Tous</TabsTrigger>
-                  <TabsTrigger value="active">Actifs</TabsTrigger>
-                  <TabsTrigger value="inactive">Inactifs</TabsTrigger>
-                </TabsList>
+            <CardTitle>Liste des clients</CardTitle>
+            <div className="flex items-center space-x-2 mt-4">
+              <div className="relative flex-1">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input type="text" placeholder="Rechercher un client..." className="pl-8" />
               </div>
-              <div className="flex items-center space-x-2 mt-4">
-                <div className="relative flex-1">
-                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input type="text" placeholder="Rechercher un client..." className="pl-8" />
-                </div>
-                <Button variant="outline" size="icon">
-                  <Filter className="h-4 w-4" />
-                </Button>
-                <Button variant="outline">Exporter</Button>
-              </div>
-            </Tabs>
+              <Button variant="outline" size="icon">
+                <Filter className="h-4 w-4" />
+              </Button>
+              <Button variant="outline">Exporter</Button>
+            </div>
           </CardHeader>
           <CardContent>
-            <TabsContent value="all" className="m-0">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Client</TableHead>
-                    <TableHead>Contact</TableHead>
-                    <TableHead>Ordonnances</TableHead>
-                    <TableHead>Dernière visite</TableHead>
-                    <TableHead>Total dépensé</TableHead>
-                    <TableHead>Statut</TableHead>
-                    <TableHead>Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {customers.map((customer) => (
-                    <TableRow key={customer.id}>
-                      <TableCell>
-                        <div className="flex items-center gap-3">
-                          <Avatar>
-                            <AvatarImage src="" alt={customer.name} />
-                            <AvatarFallback>{customer.avatar}</AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <p className="font-medium">{customer.name}</p>
-                            <p className="text-sm text-muted-foreground">ID: #{customer.id}</p>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex flex-col">
-                          <div className="flex items-center">
-                            <Mail className="h-3 w-3 mr-2 text-muted-foreground" />
-                            <span className="text-sm">{customer.email}</span>
-                          </div>
-                          <div className="flex items-center mt-1">
-                            <Phone className="h-3 w-3 mr-2 text-muted-foreground" />
-                            <span className="text-sm">{customer.phone}</span>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell>{customer.prescriptions}</TableCell>
-                      <TableCell>{customer.lastVisit}</TableCell>
-                      <TableCell>{customer.totalSpent.toFixed(2)} €</TableCell>
-                      <TableCell>
-                        <Badge variant={customer.status === 'active' ? 'default' : 'outline'}>
-                          {customer.status === 'active' ? 'Actif' : 'Inactif'}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          <Button variant="outline" size="sm">Profil</Button>
-                          <Button variant="outline" size="sm">Historique</Button>
-                        </div>
-                      </TableCell>
+            <Tabs defaultValue="all">
+              <TabsList className="mb-4">
+                <TabsTrigger value="all">Tous</TabsTrigger>
+                <TabsTrigger value="active">Actifs</TabsTrigger>
+                <TabsTrigger value="inactive">Inactifs</TabsTrigger>
+              </TabsList>
+              <TabsContent value="all">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Client</TableHead>
+                      <TableHead>Contact</TableHead>
+                      <TableHead>Ordonnances</TableHead>
+                      <TableHead>Dernière visite</TableHead>
+                      <TableHead>Total dépensé</TableHead>
+                      <TableHead>Statut</TableHead>
+                      <TableHead>Actions</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TabsContent>
-            <TabsContent value="active" className="m-0">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Client</TableHead>
-                    <TableHead>Contact</TableHead>
-                    <TableHead>Ordonnances</TableHead>
-                    <TableHead>Dernière visite</TableHead>
-                    <TableHead>Total dépensé</TableHead>
-                    <TableHead>Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {customers.filter(c => c.status === 'active').map((customer) => (
-                    <TableRow key={customer.id}>
-                      <TableCell>
-                        <div className="flex items-center gap-3">
-                          <Avatar>
-                            <AvatarImage src="" alt={customer.name} />
-                            <AvatarFallback>{customer.avatar}</AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <p className="font-medium">{customer.name}</p>
-                            <p className="text-sm text-muted-foreground">ID: #{customer.id}</p>
+                  </TableHeader>
+                  <TableBody>
+                    {customers.map((customer) => (
+                      <TableRow key={customer.id}>
+                        <TableCell>
+                          <div className="flex items-center gap-3">
+                            <Avatar>
+                              <AvatarImage src="" alt={customer.name} />
+                              <AvatarFallback>{customer.avatar}</AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <p className="font-medium">{customer.name}</p>
+                              <p className="text-sm text-muted-foreground">ID: #{customer.id}</p>
+                            </div>
                           </div>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex flex-col">
-                          <div className="flex items-center">
-                            <Mail className="h-3 w-3 mr-2 text-muted-foreground" />
-                            <span className="text-sm">{customer.email}</span>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex flex-col">
+                            <div className="flex items-center">
+                              <Mail className="h-3 w-3 mr-2 text-muted-foreground" />
+                              <span className="text-sm">{customer.email}</span>
+                            </div>
+                            <div className="flex items-center mt-1">
+                              <Phone className="h-3 w-3 mr-2 text-muted-foreground" />
+                              <span className="text-sm">{customer.phone}</span>
+                            </div>
                           </div>
-                          <div className="flex items-center mt-1">
-                            <Phone className="h-3 w-3 mr-2 text-muted-foreground" />
-                            <span className="text-sm">{customer.phone}</span>
+                        </TableCell>
+                        <TableCell>{customer.prescriptions}</TableCell>
+                        <TableCell>{customer.lastVisit}</TableCell>
+                        <TableCell>{customer.totalSpent.toFixed(2)} €</TableCell>
+                        <TableCell>
+                          <Badge variant={customer.status === 'active' ? 'default' : 'outline'}>
+                            {customer.status === 'active' ? 'Actif' : 'Inactif'}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-2">
+                            <Button variant="outline" size="sm">Profil</Button>
+                            <Button variant="outline" size="sm">Historique</Button>
                           </div>
-                        </div>
-                      </TableCell>
-                      <TableCell>{customer.prescriptions}</TableCell>
-                      <TableCell>{customer.lastVisit}</TableCell>
-                      <TableCell>{customer.totalSpent.toFixed(2)} €</TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          <Button variant="outline" size="sm">Profil</Button>
-                          <Button variant="outline" size="sm">Historique</Button>
-                        </div>
-                      </TableCell>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TabsContent>
+              <TabsContent value="active">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Client</TableHead>
+                      <TableHead>Contact</TableHead>
+                      <TableHead>Ordonnances</TableHead>
+                      <TableHead>Dernière visite</TableHead>
+                      <TableHead>Total dépensé</TableHead>
+                      <TableHead>Actions</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TabsContent>
-            <TabsContent value="inactive" className="m-0">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Client</TableHead>
-                    <TableHead>Contact</TableHead>
-                    <TableHead>Ordonnances</TableHead>
-                    <TableHead>Dernière visite</TableHead>
-                    <TableHead>Total dépensé</TableHead>
-                    <TableHead>Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {customers.filter(c => c.status === 'inactive').map((customer) => (
-                    <TableRow key={customer.id}>
-                      <TableCell>
-                        <div className="flex items-center gap-3">
-                          <Avatar>
-                            <AvatarImage src="" alt={customer.name} />
-                            <AvatarFallback>{customer.avatar}</AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <p className="font-medium">{customer.name}</p>
-                            <p className="text-sm text-muted-foreground">ID: #{customer.id}</p>
+                  </TableHeader>
+                  <TableBody>
+                    {customers.filter(c => c.status === 'active').map((customer) => (
+                      <TableRow key={customer.id}>
+                        <TableCell>
+                          <div className="flex items-center gap-3">
+                            <Avatar>
+                              <AvatarImage src="" alt={customer.name} />
+                              <AvatarFallback>{customer.avatar}</AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <p className="font-medium">{customer.name}</p>
+                              <p className="text-sm text-muted-foreground">ID: #{customer.id}</p>
+                            </div>
                           </div>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex flex-col">
-                          <div className="flex items-center">
-                            <Mail className="h-3 w-3 mr-2 text-muted-foreground" />
-                            <span className="text-sm">{customer.email}</span>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex flex-col">
+                            <div className="flex items-center">
+                              <Mail className="h-3 w-3 mr-2 text-muted-foreground" />
+                              <span className="text-sm">{customer.email}</span>
+                            </div>
+                            <div className="flex items-center mt-1">
+                              <Phone className="h-3 w-3 mr-2 text-muted-foreground" />
+                              <span className="text-sm">{customer.phone}</span>
+                            </div>
                           </div>
-                          <div className="flex items-center mt-1">
-                            <Phone className="h-3 w-3 mr-2 text-muted-foreground" />
-                            <span className="text-sm">{customer.phone}</span>
+                        </TableCell>
+                        <TableCell>{customer.prescriptions}</TableCell>
+                        <TableCell>{customer.lastVisit}</TableCell>
+                        <TableCell>{customer.totalSpent.toFixed(2)} €</TableCell>
+                        <TableCell>
+                          <div className="flex gap-2">
+                            <Button variant="outline" size="sm">Profil</Button>
+                            <Button variant="outline" size="sm">Historique</Button>
                           </div>
-                        </div>
-                      </TableCell>
-                      <TableCell>{customer.prescriptions}</TableCell>
-                      <TableCell>{customer.lastVisit}</TableCell>
-                      <TableCell>{customer.totalSpent.toFixed(2)} €</TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          <Button variant="outline" size="sm">Profil</Button>
-                          <Button variant="outline" size="sm">Historique</Button>
-                        </div>
-                      </TableCell>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TabsContent>
+              <TabsContent value="inactive">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Client</TableHead>
+                      <TableHead>Contact</TableHead>
+                      <TableHead>Ordonnances</TableHead>
+                      <TableHead>Dernière visite</TableHead>
+                      <TableHead>Total dépensé</TableHead>
+                      <TableHead>Actions</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TabsContent>
+                  </TableHeader>
+                  <TableBody>
+                    {customers.filter(c => c.status === 'inactive').map((customer) => (
+                      <TableRow key={customer.id}>
+                        <TableCell>
+                          <div className="flex items-center gap-3">
+                            <Avatar>
+                              <AvatarImage src="" alt={customer.name} />
+                              <AvatarFallback>{customer.avatar}</AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <p className="font-medium">{customer.name}</p>
+                              <p className="text-sm text-muted-foreground">ID: #{customer.id}</p>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex flex-col">
+                            <div className="flex items-center">
+                              <Mail className="h-3 w-3 mr-2 text-muted-foreground" />
+                              <span className="text-sm">{customer.email}</span>
+                            </div>
+                            <div className="flex items-center mt-1">
+                              <Phone className="h-3 w-3 mr-2 text-muted-foreground" />
+                              <span className="text-sm">{customer.phone}</span>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>{customer.prescriptions}</TableCell>
+                        <TableCell>{customer.lastVisit}</TableCell>
+                        <TableCell>{customer.totalSpent.toFixed(2)} €</TableCell>
+                        <TableCell>
+                          <div className="flex gap-2">
+                            <Button variant="outline" size="sm">Profil</Button>
+                            <Button variant="outline" size="sm">Historique</Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TabsContent>
+            </Tabs>
           </CardContent>
         </Card>
       </div>

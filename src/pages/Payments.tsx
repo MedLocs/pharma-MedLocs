@@ -69,183 +69,185 @@ const Payments = () => {
 
         <Card>
           <CardHeader>
-            <Tabs defaultValue="all">
-              <div className="flex items-center justify-between">
-                <CardTitle>Historique des paiements</CardTitle>
-                <TabsList>
-                  <TabsTrigger value="all">Tous</TabsTrigger>
-                  <TabsTrigger value="card">Carte</TabsTrigger>
-                  <TabsTrigger value="cash">Espèces</TabsTrigger>
-                  <TabsTrigger value="online">En ligne</TabsTrigger>
-                </TabsList>
-              </div>
-              <div className="flex w-full max-w-sm items-center space-x-2 mt-4">
-                <Input type="text" placeholder="Rechercher un paiement..." />
-                <Button type="submit" variant="outline" size="icon">
-                  <Search className="h-4 w-4" />
-                </Button>
-              </div>
-            </Tabs>
+            <CardTitle>Historique des paiements</CardTitle>
+            <div className="flex w-full max-w-sm items-center space-x-2 mt-4">
+              <Input type="text" placeholder="Rechercher un paiement..." />
+              <Button type="submit" variant="outline" size="icon">
+                <Search className="h-4 w-4" />
+              </Button>
+            </div>
           </CardHeader>
           <CardContent>
-            <TabsContent value="all" className="m-0">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Référence</TableHead>
-                    <TableHead>Client</TableHead>
-                    <TableHead>Montant</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Méthode</TableHead>
-                    <TableHead>Statut</TableHead>
-                    <TableHead>Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {payments.map((payment) => (
-                    <TableRow key={payment.id}>
-                      <TableCell className="font-medium">{payment.reference}</TableCell>
-                      <TableCell>{payment.client}</TableCell>
-                      <TableCell>{payment.amount.toFixed(2)} €</TableCell>
-                      <TableCell>{payment.date}</TableCell>
-                      <TableCell>{payment.method}</TableCell>
-                      <TableCell>
-                        <Badge variant={
-                          payment.status === 'Payé' ? 'default' : 
-                          payment.status === 'En attente' ? 'outline' :
-                          'destructive'
-                        }>
-                          {payment.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          <Button variant="outline" size="sm">Détails</Button>
-                          <Button variant="outline" size="sm">Facture</Button>
-                        </div>
-                      </TableCell>
+            <Tabs defaultValue="all">
+              <TabsList className="mb-4">
+                <TabsTrigger value="all">Tous</TabsTrigger>
+                <TabsTrigger value="card">Carte</TabsTrigger>
+                <TabsTrigger value="cash">Espèces</TabsTrigger>
+                <TabsTrigger value="online">En ligne</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="all" className="m-0">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Référence</TableHead>
+                      <TableHead>Client</TableHead>
+                      <TableHead>Montant</TableHead>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Méthode</TableHead>
+                      <TableHead>Statut</TableHead>
+                      <TableHead>Actions</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TabsContent>
-            <TabsContent value="card" className="m-0">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Référence</TableHead>
-                    <TableHead>Client</TableHead>
-                    <TableHead>Montant</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Statut</TableHead>
-                    <TableHead>Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {payments.filter(p => p.method === 'Carte').map((payment) => (
-                    <TableRow key={payment.id}>
-                      <TableCell className="font-medium">{payment.reference}</TableCell>
-                      <TableCell>{payment.client}</TableCell>
-                      <TableCell>{payment.amount.toFixed(2)} €</TableCell>
-                      <TableCell>{payment.date}</TableCell>
-                      <TableCell>
-                        <Badge variant={
-                          payment.status === 'Payé' ? 'default' : 
-                          payment.status === 'En attente' ? 'outline' :
-                          'destructive'
-                        }>
-                          {payment.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          <Button variant="outline" size="sm">Détails</Button>
-                          <Button variant="outline" size="sm">Facture</Button>
-                        </div>
-                      </TableCell>
+                  </TableHeader>
+                  <TableBody>
+                    {payments.map((payment) => (
+                      <TableRow key={payment.id}>
+                        <TableCell className="font-medium">{payment.reference}</TableCell>
+                        <TableCell>{payment.client}</TableCell>
+                        <TableCell>{payment.amount.toFixed(2)} €</TableCell>
+                        <TableCell>{payment.date}</TableCell>
+                        <TableCell>{payment.method}</TableCell>
+                        <TableCell>
+                          <Badge variant={
+                            payment.status === 'Payé' ? 'default' : 
+                            payment.status === 'En attente' ? 'outline' :
+                            'destructive'
+                          }>
+                            {payment.status}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-2">
+                            <Button variant="outline" size="sm">Détails</Button>
+                            <Button variant="outline" size="sm">Facture</Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TabsContent>
+              
+              <TabsContent value="card" className="m-0">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Référence</TableHead>
+                      <TableHead>Client</TableHead>
+                      <TableHead>Montant</TableHead>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Statut</TableHead>
+                      <TableHead>Actions</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TabsContent>
-            <TabsContent value="cash" className="m-0">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Référence</TableHead>
-                    <TableHead>Client</TableHead>
-                    <TableHead>Montant</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Statut</TableHead>
-                    <TableHead>Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {payments.filter(p => p.method === 'Espèces').map((payment) => (
-                    <TableRow key={payment.id}>
-                      <TableCell className="font-medium">{payment.reference}</TableCell>
-                      <TableCell>{payment.client}</TableCell>
-                      <TableCell>{payment.amount.toFixed(2)} €</TableCell>
-                      <TableCell>{payment.date}</TableCell>
-                      <TableCell>
-                        <Badge variant={
-                          payment.status === 'Payé' ? 'default' : 
-                          payment.status === 'En attente' ? 'outline' :
-                          'destructive'
-                        }>
-                          {payment.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          <Button variant="outline" size="sm">Détails</Button>
-                          <Button variant="outline" size="sm">Facture</Button>
-                        </div>
-                      </TableCell>
+                  </TableHeader>
+                  <TableBody>
+                    {payments.filter(p => p.method === 'Carte').map((payment) => (
+                      <TableRow key={payment.id}>
+                        <TableCell className="font-medium">{payment.reference}</TableCell>
+                        <TableCell>{payment.client}</TableCell>
+                        <TableCell>{payment.amount.toFixed(2)} €</TableCell>
+                        <TableCell>{payment.date}</TableCell>
+                        <TableCell>
+                          <Badge variant={
+                            payment.status === 'Payé' ? 'default' : 
+                            payment.status === 'En attente' ? 'outline' :
+                            'destructive'
+                          }>
+                            {payment.status}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-2">
+                            <Button variant="outline" size="sm">Détails</Button>
+                            <Button variant="outline" size="sm">Facture</Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TabsContent>
+              
+              <TabsContent value="cash" className="m-0">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Référence</TableHead>
+                      <TableHead>Client</TableHead>
+                      <TableHead>Montant</TableHead>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Statut</TableHead>
+                      <TableHead>Actions</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TabsContent>
-            <TabsContent value="online" className="m-0">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Référence</TableHead>
-                    <TableHead>Client</TableHead>
-                    <TableHead>Montant</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Statut</TableHead>
-                    <TableHead>Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {payments.filter(p => p.method === 'En ligne').map((payment) => (
-                    <TableRow key={payment.id}>
-                      <TableCell className="font-medium">{payment.reference}</TableCell>
-                      <TableCell>{payment.client}</TableCell>
-                      <TableCell>{payment.amount.toFixed(2)} €</TableCell>
-                      <TableCell>{payment.date}</TableCell>
-                      <TableCell>
-                        <Badge variant={
-                          payment.status === 'Payé' ? 'default' : 
-                          payment.status === 'En attente' ? 'outline' :
-                          'destructive'
-                        }>
-                          {payment.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          <Button variant="outline" size="sm">Détails</Button>
-                          <Button variant="outline" size="sm">Facture</Button>
-                        </div>
-                      </TableCell>
+                  </TableHeader>
+                  <TableBody>
+                    {payments.filter(p => p.method === 'Espèces').map((payment) => (
+                      <TableRow key={payment.id}>
+                        <TableCell className="font-medium">{payment.reference}</TableCell>
+                        <TableCell>{payment.client}</TableCell>
+                        <TableCell>{payment.amount.toFixed(2)} €</TableCell>
+                        <TableCell>{payment.date}</TableCell>
+                        <TableCell>
+                          <Badge variant={
+                            payment.status === 'Payé' ? 'default' : 
+                            payment.status === 'En attente' ? 'outline' :
+                            'destructive'
+                          }>
+                            {payment.status}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-2">
+                            <Button variant="outline" size="sm">Détails</Button>
+                            <Button variant="outline" size="sm">Facture</Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TabsContent>
+              
+              <TabsContent value="online" className="m-0">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Référence</TableHead>
+                      <TableHead>Client</TableHead>
+                      <TableHead>Montant</TableHead>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Statut</TableHead>
+                      <TableHead>Actions</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TabsContent>
+                  </TableHeader>
+                  <TableBody>
+                    {payments.filter(p => p.method === 'En ligne').map((payment) => (
+                      <TableRow key={payment.id}>
+                        <TableCell className="font-medium">{payment.reference}</TableCell>
+                        <TableCell>{payment.client}</TableCell>
+                        <TableCell>{payment.amount.toFixed(2)} €</TableCell>
+                        <TableCell>{payment.date}</TableCell>
+                        <TableCell>
+                          <Badge variant={
+                            payment.status === 'Payé' ? 'default' : 
+                            payment.status === 'En attente' ? 'outline' :
+                            'destructive'
+                          }>
+                            {payment.status}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-2">
+                            <Button variant="outline" size="sm">Détails</Button>
+                            <Button variant="outline" size="sm">Facture</Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TabsContent>
+            </Tabs>
           </CardContent>
         </Card>
       </div>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,10 +7,23 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
-import { Search, Plus, Edit, Phone, Mail, Download, Upload, Star, Truck } from 'lucide-react';
+import { 
+  Search, 
+  Plus, 
+  MapPin, 
+  Phone, 
+  Mail, 
+  Download, 
+  Upload, 
+  Edit, 
+  RefreshCw, 
+  Trash,
+  Star,
+  Calendar,
+  ShoppingBag
+} from 'lucide-react';
 import { SupplierForm } from '@/components/forms/SupplierForm';
 import { ImportDataModal } from '@/components/forms/ImportDataModal';
-import { TabsContent, Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const Suppliers = () => {
   const { toast } = useToast();
@@ -19,7 +31,6 @@ const Suppliers = () => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [showImportModal, setShowImportModal] = useState(false);
 
-  // Exemple de données de fournisseurs
   const suppliersData = [
     { 
       id: 1, 
@@ -83,7 +94,6 @@ const Suppliers = () => {
     },
   ];
 
-  // Filtrage des fournisseurs
   const filteredSuppliers = suppliersData.filter(supplier => {
     if (searchTerm) {
       const searchLower = searchTerm.toLowerCase();
@@ -402,14 +412,12 @@ const Suppliers = () => {
         </Card>
       </div>
 
-      {/* Modal pour ajouter un fournisseur */}
       <Dialog open={showAddForm} onOpenChange={setShowAddForm}>
         <DialogContent className="sm:max-w-xl">
           <SupplierForm onClose={() => setShowAddForm(false)} />
         </DialogContent>
       </Dialog>
 
-      {/* Modal d'importation de données */}
       <ImportDataModal 
         open={showImportModal} 
         onOpenChange={setShowImportModal} 

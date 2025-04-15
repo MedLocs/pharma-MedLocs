@@ -59,3 +59,6 @@ export interface SyncStatus {
 }
 
 export type StockStatus = 'optimal' | 'low' | 'critical' | 'out_of_stock';
+
+// Export the import types to match our ImportDataModal component
+export type ImportType = 'prescriptions' | 'inventory' | 'customers' | 'pharmacies' | 'suppliers';

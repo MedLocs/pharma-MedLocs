@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { 
@@ -19,7 +18,7 @@ import { Upload, FileUp, CheckCircle } from 'lucide-react';
 import Papa from 'papaparse';
 import * as XLSX from 'xlsx';
 
-type ImportType = 'prescriptions' | 'inventory' | 'customers';
+export type ImportType = 'prescriptions' | 'inventory' | 'customers' | 'pharmacies' | 'suppliers';
 
 interface ImportDataModalProps {
   open: boolean;
@@ -41,7 +40,9 @@ export function ImportDataModal({ open, onOpenChange, importType }: ImportDataMo
   const typeLabels: Record<ImportType, string> = {
     prescriptions: 'Ordonnances',
     inventory: 'Inventaire',
-    customers: 'Clients'
+    customers: 'Clients',
+    pharmacies: 'Pharmacies',
+    suppliers: 'Fournisseurs'
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

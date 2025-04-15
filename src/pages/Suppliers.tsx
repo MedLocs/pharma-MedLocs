@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { useToast } from '@/components/ui/use-toast';
 import { 
   Search, 
@@ -20,7 +22,8 @@ import {
   Trash,
   Star,
   Calendar,
-  ShoppingBag
+  ShoppingBag,
+  Truck
 } from 'lucide-react';
 import { SupplierForm } from '@/components/forms/SupplierForm';
 import { ImportDataModal } from '@/components/forms/ImportDataModal';
@@ -34,63 +37,78 @@ const Suppliers = () => {
   const suppliersData = [
     { 
       id: 1, 
-      name: 'PharmaPro Supplies', 
+      name: 'PharmaDistri', 
       contact: 'Jean Dupont', 
-      email: 'contact@pharmapro.com', 
-      phone: '+33 1 23 45 67 89', 
-      address: '15 Rue de la Pharmacie, Paris', 
-      products: [12, 24, 35], 
+      email: 'contact@pharmadistri.com', 
+      phone: '01 23 45 67 89', 
+      address: '15 rue des Médicaments, 75001 Paris', 
+      products: [1, 2, 5, 8], 
       rating: 4.8,
-      status: 'active',
-      category: 'Médicaments'
+      lastOrder: '2025-04-10',
+      paymentTerms: '30 jours',
+      notes: 'Fournisseur principal de médicaments génériques',
+      status: 'active' as const,
+      category: 'Médicaments génériques'
     },
     { 
       id: 2, 
-      name: 'MediStock France', 
+      name: 'MediPlus', 
       contact: 'Marie Laurent', 
-      email: 'info@medistock.fr', 
-      phone: '+33 1 98 76 54 32', 
-      address: '8 Avenue des Médicaments, Lyon', 
-      products: [5, 18, 27], 
+      email: 'marie@mediplus.fr', 
+      phone: '01 98 76 54 32', 
+      address: '8 avenue de la Santé, 69002 Lyon', 
+      products: [3, 6], 
       rating: 4.2,
-      status: 'active',
-      category: 'Équipement'
+      lastOrder: '2025-04-05',
+      paymentTerms: '45 jours',
+      notes: 'Spécialiste des médicaments respiratoires',
+      status: 'active' as const,
+      category: 'Médicaments spécialisés'
     },
     { 
       id: 3, 
-      name: 'Santé Distributeurs', 
-      contact: 'Pierre Lefèvre', 
-      email: 'contact@santedistrib.fr', 
-      phone: '+33 4 56 78 90 12', 
-      address: '22 Boulevard de la Santé, Marseille', 
-      products: [3, 9, 14], 
+      name: 'LaboPharma', 
+      contact: 'Pierre Martin', 
+      email: 'p.martin@labopharma.com', 
+      phone: '03 45 67 89 10', 
+      address: '25 boulevard des Sciences, 44000 Nantes', 
+      products: [4, 7], 
       rating: 3.9,
-      status: 'inactive',
-      category: 'Parapharmacie'
+      lastOrder: '2025-03-28',
+      paymentTerms: '60 jours',
+      notes: 'Grand laboratoire pharmaceutique national',
+      status: 'active' as const,
+      category: 'Produits pharmaceutiques'
     },
     { 
       id: 4, 
-      name: 'BioMed Solutions', 
-      contact: 'Sophie Mercier', 
-      email: 'info@biomed.fr', 
-      phone: '+33 5 67 89 01 23', 
-      address: '5 Rue des Laboratoires, Bordeaux', 
-      products: [7, 19, 31], 
+      name: 'SantéSupply', 
+      contact: 'Sophie Blanc', 
+      email: 'contact@santesupply.fr', 
+      phone: '04 56 78 91 23', 
+      address: '12 rue de l\'Hôpital, 13008 Marseille', 
+      products: [], 
       rating: 4.5,
-      status: 'active',
-      category: 'Médicaments'
+      lastOrder: '2025-02-15',
+      paymentTerms: '30 jours',
+      notes: 'Fournisseur d\'équipements médicaux',
+      status: 'inactive' as const,
+      category: 'Équipement médical'
     },
     { 
       id: 5, 
-      name: 'Pharma Express', 
-      contact: 'Lucas Martin', 
-      email: 'contact@pharmaexpress.com', 
-      phone: '+33 3 45 67 89 01', 
-      address: '17 Avenue des Livraisons, Lille', 
-      products: [2, 11, 26], 
-      rating: 4.0,
-      status: 'active',
-      category: 'Logistique'
+      name: 'PharmaPro', 
+      contact: 'Thomas Petit', 
+      email: 'thomas@pharmapro.com', 
+      phone: '02 34 56 78 90', 
+      address: '5 allée des Pharmaciens, 59000 Lille', 
+      products: [1, 3, 5], 
+      rating: 4.1,
+      lastOrder: '2025-04-12',
+      paymentTerms: '15 jours',
+      notes: 'Fournisseur de produits biologiques',
+      status: 'active' as const,
+      category: 'Produits biologiques'
     },
   ];
 
@@ -99,9 +117,8 @@ const Suppliers = () => {
       const searchLower = searchTerm.toLowerCase();
       return (
         supplier.name.toLowerCase().includes(searchLower) ||
-        supplier.category.toLowerCase().includes(searchLower) ||
         supplier.contact.toLowerCase().includes(searchLower) ||
-        supplier.email.toLowerCase().includes(searchLower)
+        supplier.category.toLowerCase().includes(searchLower)
       );
     }
     return true;
@@ -115,13 +132,6 @@ const Suppliers = () => {
     });
   };
 
-  const handleExportData = () => {
-    toast({
-      title: "Export réussi",
-      description: "La liste des fournisseurs a été exportée au format Excel",
-    });
-  };
-
   return (
     <Layout>
       <div className="flex flex-col gap-6">
@@ -132,10 +142,6 @@ const Suppliers = () => {
               <Upload className="mr-2 h-4 w-4" />
               Importer
             </Button>
-            <Button variant="outline" onClick={handleExportData}>
-              <Download className="mr-2 h-4 w-4" />
-              Exporter
-            </Button>
             <Button onClick={() => setShowAddForm(true)}>
               <Plus className="mr-2 h-4 w-4" />
               Ajouter un fournisseur
@@ -143,20 +149,20 @@ const Suppliers = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle>Total fournisseurs</CardTitle>
-              <CardDescription>Nombre de fournisseurs actifs</CardDescription>
+              <CardTitle>Fournisseurs actifs</CardTitle>
+              <CardDescription>Total fournisseurs</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-bold">24</p>
+              <p className="text-3xl font-bold">{suppliersData.filter(s => s.status === 'active').length}</p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle>Catégories</CardTitle>
-              <CardDescription>Types de fournisseurs</CardDescription>
+              <CardTitle>Commandes récentes</CardTitle>
+              <CardDescription>30 derniers jours</CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-3xl font-bold">8</p>
@@ -164,11 +170,20 @@ const Suppliers = () => {
           </Card>
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle>Commandes en attente</CardTitle>
-              <CardDescription>Commandes à traiter</CardDescription>
+              <CardTitle>Montant total</CardTitle>
+              <CardDescription>Achats ce mois</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-bold">12</p>
+              <p className="text-3xl font-bold">12 425,60 €</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle>En attente</CardTitle>
+              <CardDescription>Livraisons à recevoir</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-3xl font-bold">3</p>
             </CardContent>
           </Card>
         </div>
@@ -176,7 +191,7 @@ const Suppliers = () => {
         <Card>
           <CardHeader>
             <CardTitle>Liste des fournisseurs</CardTitle>
-            <CardDescription>Gérez vos fournisseurs et leurs coordonnées</CardDescription>
+            <CardDescription>Gérez vos fournisseurs et commandes</CardDescription>
             <div className="flex justify-between items-center mt-4">
               <form onSubmit={handleSearch} className="flex w-full max-w-sm">
                 <Input 
@@ -189,25 +204,31 @@ const Suppliers = () => {
                   <Search className="h-4 w-4" />
                 </Button>
               </form>
+              <Button variant="outline" size="sm">
+                <Download className="mr-2 h-4 w-4" />
+                Exporter
+              </Button>
             </div>
           </CardHeader>
           <CardContent>
-            <Tabs defaultValue="all">
-              <TabsList className="mb-4">
-                <TabsTrigger value="all">Tous</TabsTrigger>
-                <TabsTrigger value="active">Actifs</TabsTrigger>
-                <TabsTrigger value="inactive">Inactifs</TabsTrigger>
+            <Tabs defaultValue="list">
+              <TabsList>
+                <TabsTrigger value="list">Liste</TabsTrigger>
+                <TabsTrigger value="cards">Fiches</TabsTrigger>
+                <TabsTrigger value="orders">Commandes</TabsTrigger>
+                <TabsTrigger value="stats">Statistiques</TabsTrigger>
               </TabsList>
-              
-              <TabsContent value="all">
+
+              <TabsContent value="list">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Fournisseur</TableHead>
+                      <TableHead>Nom</TableHead>
                       <TableHead>Catégorie</TableHead>
                       <TableHead>Contact</TableHead>
-                      <TableHead>Évaluation</TableHead>
-                      <TableHead>Status</TableHead>
+                      <TableHead>Téléphone</TableHead>
+                      <TableHead>Dernière commande</TableHead>
+                      <TableHead>Note</TableHead>
                       <TableHead>Actions</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -217,43 +238,41 @@ const Suppliers = () => {
                         <TableRow key={supplier.id}>
                           <TableCell className="font-medium">
                             <div className="flex items-center">
-                              <Truck className="h-5 w-5 mr-2 text-muted-foreground" />
+                              {supplier.status === 'inactive' && (
+                                <Badge variant="outline" className="mr-2 bg-red-100 text-red-800">Inactif</Badge>
+                              )}
                               {supplier.name}
                             </div>
                           </TableCell>
                           <TableCell>
                             <Badge variant="outline">{supplier.category}</Badge>
                           </TableCell>
+                          <TableCell>{supplier.contact}</TableCell>
                           <TableCell>
-                            <div className="flex flex-col">
-                              <div className="flex items-center">
-                                <Phone className="h-3 w-3 mr-1 text-muted-foreground" />
-                                <span className="text-sm">{supplier.phone}</span>
-                              </div>
-                              <div className="flex items-center mt-1">
-                                <Mail className="h-3 w-3 mr-1 text-muted-foreground" />
-                                <span className="text-sm">{supplier.email}</span>
-                              </div>
+                            <div className="flex items-center">
+                              <Phone className="h-4 w-4 mr-1 text-muted-foreground" />
+                              {supplier.phone}
                             </div>
                           </TableCell>
                           <TableCell>
                             <div className="flex items-center">
-                              <span className="mr-1">{supplier.rating}</span>
-                              <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                              <Calendar className="h-4 w-4 mr-1 text-muted-foreground" />
+                              {supplier.lastOrder || 'Jamais'}
                             </div>
                           </TableCell>
                           <TableCell>
-                            <Badge variant={supplier.status === 'active' ? 'default' : 'secondary'}>
-                              {supplier.status === 'active' ? 'Actif' : 'Inactif'}
-                            </Badge>
+                            <div className="flex items-center">
+                              <Star className="h-4 w-4 mr-1 text-amber-500" />
+                              {supplier.rating.toFixed(1)}
+                            </div>
                           </TableCell>
                           <TableCell>
                             <div className="flex gap-2">
                               <Button variant="outline" size="sm">
-                                <Edit className="h-4 w-4" />
+                                <Truck className="h-4 w-4" />
                               </Button>
                               <Button variant="outline" size="sm">
-                                Commande
+                                <Edit className="h-4 w-4" />
                               </Button>
                             </div>
                           </TableCell>
@@ -261,7 +280,7 @@ const Suppliers = () => {
                       ))
                     ) : (
                       <TableRow>
-                        <TableCell colSpan={6} className="text-center py-4 text-muted-foreground">
+                        <TableCell colSpan={7} className="text-center py-4 text-muted-foreground">
                           Aucun fournisseur trouvé pour les critères spécifiés.
                         </TableCell>
                       </TableRow>
@@ -269,143 +288,144 @@ const Suppliers = () => {
                   </TableBody>
                 </Table>
               </TabsContent>
-              
-              <TabsContent value="active">
+
+              <TabsContent value="cards">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {filteredSuppliers.length > 0 ? (
+                    filteredSuppliers.map((supplier) => (
+                      <Card key={supplier.id}>
+                        <CardHeader>
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <CardTitle>{supplier.name}</CardTitle>
+                              <CardDescription>{supplier.category}</CardDescription>
+                            </div>
+                            {supplier.status === 'inactive' ? (
+                              <Badge variant="outline" className="bg-red-100 text-red-800">Inactif</Badge>
+                            ) : (
+                              <Badge variant="outline" className="bg-green-100 text-green-800">Actif</Badge>
+                            )}
+                          </div>
+                        </CardHeader>
+                        <CardContent className="space-y-3">
+                          <div className="flex items-center">
+                            <MapPin className="h-4 w-4 mr-2 text-muted-foreground" />
+                            <span className="text-sm">{supplier.address}</span>
+                          </div>
+                          <div className="flex items-center">
+                            <Phone className="h-4 w-4 mr-2 text-muted-foreground" />
+                            <span className="text-sm">{supplier.phone}</span>
+                          </div>
+                          <div className="flex items-center">
+                            <Mail className="h-4 w-4 mr-2 text-muted-foreground" />
+                            <span className="text-sm">{supplier.email}</span>
+                          </div>
+                          <div className="flex items-center">
+                            <Star className="h-4 w-4 mr-2 text-amber-500" />
+                            <span className="text-sm">Note: {supplier.rating.toFixed(1)}/5</span>
+                          </div>
+                          <div className="flex items-center">
+                            <ShoppingBag className="h-4 w-4 mr-2 text-muted-foreground" />
+                            <span className="text-sm">{supplier.products.length} produits</span>
+                          </div>
+                          <div className="flex items-center">
+                            <Truck className="h-4 w-4 mr-2 text-muted-foreground" />
+                            <span className="text-sm">Paiement: {supplier.paymentTerms}</span>
+                          </div>
+                          {supplier.notes && (
+                            <p className="text-sm italic border-l-2 pl-2 mt-2">{supplier.notes}</p>
+                          )}
+                        </CardContent>
+                      </Card>
+                    ))
+                  ) : (
+                    <div className="col-span-3 text-center py-4 text-muted-foreground">
+                      Aucun fournisseur trouvé pour les critères spécifiés.
+                    </div>
+                  )}
+                </div>
+              </TabsContent>
+
+              <TabsContent value="orders">
                 <Table>
                   <TableHeader>
                     <TableRow>
+                      <TableHead>Commande</TableHead>
                       <TableHead>Fournisseur</TableHead>
-                      <TableHead>Catégorie</TableHead>
-                      <TableHead>Contact</TableHead>
-                      <TableHead>Évaluation</TableHead>
-                      <TableHead>Status</TableHead>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Montant</TableHead>
+                      <TableHead>Statut</TableHead>
                       <TableHead>Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {filteredSuppliers.filter(s => s.status === 'active').length > 0 ? (
-                      filteredSuppliers.filter(s => s.status === 'active').map((supplier) => (
-                        <TableRow key={supplier.id}>
-                          <TableCell className="font-medium">
-                            <div className="flex items-center">
-                              <Truck className="h-5 w-5 mr-2 text-muted-foreground" />
-                              {supplier.name}
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <Badge variant="outline">{supplier.category}</Badge>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex flex-col">
-                              <div className="flex items-center">
-                                <Phone className="h-3 w-3 mr-1 text-muted-foreground" />
-                                <span className="text-sm">{supplier.phone}</span>
-                              </div>
-                              <div className="flex items-center mt-1">
-                                <Mail className="h-3 w-3 mr-1 text-muted-foreground" />
-                                <span className="text-sm">{supplier.email}</span>
-                              </div>
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex items-center">
-                              <span className="mr-1">{supplier.rating}</span>
-                              <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <Badge>Actif</Badge>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex gap-2">
-                              <Button variant="outline" size="sm">
-                                <Edit className="h-4 w-4" />
-                              </Button>
-                              <Button variant="outline" size="sm">
-                                Commande
-                              </Button>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    ) : (
-                      <TableRow>
-                        <TableCell colSpan={6} className="text-center py-4 text-muted-foreground">
-                          Aucun fournisseur actif trouvé.
-                        </TableCell>
-                      </TableRow>
-                    )}
+                    <TableRow>
+                      <TableCell className="font-medium">#ORD-2025-045</TableCell>
+                      <TableCell>PharmaDistri</TableCell>
+                      <TableCell>15/04/2025</TableCell>
+                      <TableCell>2 450,80 €</TableCell>
+                      <TableCell>
+                        <Badge className="bg-amber-100 text-amber-800">En transit</Badge>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex gap-2">
+                          <Button variant="outline" size="sm">
+                            <Truck className="h-4 w-4" />
+                          </Button>
+                          <Button variant="outline" size="sm">
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-medium">#ORD-2025-044</TableCell>
+                      <TableCell>PharmaPro</TableCell>
+                      <TableCell>12/04/2025</TableCell>
+                      <TableCell>1 876,25 €</TableCell>
+                      <TableCell>
+                        <Badge className="bg-green-100 text-green-800">Livré</Badge>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex gap-2">
+                          <Button variant="outline" size="sm">
+                            <Truck className="h-4 w-4" />
+                          </Button>
+                          <Button variant="outline" size="sm">
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-medium">#ORD-2025-043</TableCell>
+                      <TableCell>MediPlus</TableCell>
+                      <TableCell>10/04/2025</TableCell>
+                      <TableCell>3 562,40 €</TableCell>
+                      <TableCell>
+                        <Badge className="bg-green-100 text-green-800">Livré</Badge>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex gap-2">
+                          <Button variant="outline" size="sm">
+                            <Truck className="h-4 w-4" />
+                          </Button>
+                          <Button variant="outline" size="sm">
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
                   </TableBody>
                 </Table>
               </TabsContent>
-              
-              <TabsContent value="inactive">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Fournisseur</TableHead>
-                      <TableHead>Catégorie</TableHead>
-                      <TableHead>Contact</TableHead>
-                      <TableHead>Évaluation</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredSuppliers.filter(s => s.status === 'inactive').length > 0 ? (
-                      filteredSuppliers.filter(s => s.status === 'inactive').map((supplier) => (
-                        <TableRow key={supplier.id}>
-                          <TableCell className="font-medium">
-                            <div className="flex items-center">
-                              <Truck className="h-5 w-5 mr-2 text-muted-foreground" />
-                              {supplier.name}
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <Badge variant="outline">{supplier.category}</Badge>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex flex-col">
-                              <div className="flex items-center">
-                                <Phone className="h-3 w-3 mr-1 text-muted-foreground" />
-                                <span className="text-sm">{supplier.phone}</span>
-                              </div>
-                              <div className="flex items-center mt-1">
-                                <Mail className="h-3 w-3 mr-1 text-muted-foreground" />
-                                <span className="text-sm">{supplier.email}</span>
-                              </div>
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex items-center">
-                              <span className="mr-1">{supplier.rating}</span>
-                              <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <Badge variant="secondary">Inactif</Badge>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex gap-2">
-                              <Button variant="outline" size="sm">
-                                <Edit className="h-4 w-4" />
-                              </Button>
-                              <Button variant="default" size="sm">
-                                Activer
-                              </Button>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    ) : (
-                      <TableRow>
-                        <TableCell colSpan={6} className="text-center py-4 text-muted-foreground">
-                          Aucun fournisseur inactif trouvé.
-                        </TableCell>
-                      </TableRow>
-                    )}
-                  </TableBody>
-                </Table>
+
+              <TabsContent value="stats">
+                <div className="space-y-4">
+                  <p className="text-center text-muted-foreground my-8">
+                    Les statistiques détaillées des fournisseurs seront disponibles prochainement.
+                  </p>
+                </div>
               </TabsContent>
             </Tabs>
           </CardContent>

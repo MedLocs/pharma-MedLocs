@@ -18,7 +18,8 @@ import {
   CloudOff,
   Database,
   AlertCircle,
-  ShieldCheck
+  ShieldCheck,
+  Package
 } from 'lucide-react';
 import { SyncStatus } from '@/features/inventory/types';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -120,6 +121,15 @@ const Sync = () => {
       ip: '78.92.145.67'
     }
   ];
+
+  // Nouvelle section pour la synchronisation des réservations
+  const reservationSyncData = {
+    total: 48,
+    pending: 12,
+    lastSync: new Date(Date.now() - 7200000), // Simule deux heures plus tôt
+    offline: 3,
+    status: 'synced' as const
+  };
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -261,13 +271,49 @@ const Sync = () => {
             </CardFooter>
           </Card>
 
-          <Card className="col-span-3 md:col-span-2">
+          <Card className="col-span-3 md:col-span-1">
             <CardHeader className="pb-2">
-              <CardTitle>Paramètres de synchronisation</CardTitle>
-              <CardDescription>Configuration et options de synchronisation</CardDescription>
+              <CardTitle>Réservations</CardTitle>
+              <CardDescription>
+                Synchronisation des réservations: {formatTimeAgo(reservationSyncData.lastSync)}
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex items-center justify-center mt-4">
+                {reservationSyncData.status === 'synced' ? (
+                  <div className="text-center">
+                    <Package className="h-12 w-12 text-green-500 mx-auto mb-2" />
+                    <p className="font-medium">Réservations synchronisées</p>
+                    <p className="text-sm text-muted-foreground">Toutes les réservations sont à jour</p>
+                  </div>
+                ) : (
+                  <div className="text-center">
+                    <Clock className="h-12 w-12 text-amber-500 mx-auto mb-2" />
+                    <p className="font-medium">Synchronisation requise</p>
+                    <p className="text-sm text-muted-foreground">Des réservations sont en attente</p>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+            <CardFooter className="flex justify-between border-t pt-4">
+              <div className="flex items-center">
+                <Upload className="h-4 w-4 mr-1 text-muted-foreground" />
+                <span className="text-sm">Réservations en attente: {reservationSyncData.pending}</span>
+              </div>
+              <div className="flex items-center">
+                <Download className="h-4 w-4 mr-1 text-muted-foreground" />
+                <span className="text-sm">Pharmacies hors ligne: {reservationSyncData.offline}</span>
+              </div>
+            </CardFooter>
+          </Card>
+
+          <Card className="col-span-3 md:col-span-1">
+            <CardHeader className="pb-2">
+              <CardTitle>Paramètres de synchronisation</CardTitle>
+              <CardDescription>Configuration et options</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 gap-4">
                 <div className="flex justify-between items-center p-3 border rounded-md">
                   <div className="flex items-center">
                     <RefreshCw className="h-5 w-5 mr-2 text-muted-foreground" />
@@ -289,28 +335,6 @@ const Sync = () => {
                   </div>
                   <Badge variant="outline" className="bg-green-100">Activé</Badge>
                 </div>
-                
-                <div className="flex justify-between items-center p-3 border rounded-md">
-                  <div className="flex items-center">
-                    <Database className="h-5 w-5 mr-2 text-muted-foreground" />
-                    <div>
-                      <p className="font-medium">Stockage local</p>
-                      <p className="text-sm text-muted-foreground">512 MB utilisés sur 1 GB</p>
-                    </div>
-                  </div>
-                  <Progress value={51} className="w-20 h-2" />
-                </div>
-                
-                <div className="flex justify-between items-center p-3 border rounded-md">
-                  <div className="flex items-center">
-                    <ShieldCheck className="h-5 w-5 mr-2 text-muted-foreground" />
-                    <div>
-                      <p className="font-medium">Chiffrement des données</p>
-                      <p className="text-sm text-muted-foreground">Sécurité renforcée</p>
-                    </div>
-                  </div>
-                  <Badge variant="outline" className="bg-green-100">Activé</Badge>
-                </div>
               </div>
             </CardContent>
           </Card>
@@ -320,6 +344,7 @@ const Sync = () => {
           <TabsList className="mb-4">
             <TabsTrigger value="history">Historique des synchronisations</TabsTrigger>
             <TabsTrigger value="devices">Appareils connectés</TabsTrigger>
+            <TabsTrigger value="reservations">Réservations</TabsTrigger>
           </TabsList>
           
           <TabsContent value="history">
@@ -418,6 +443,83 @@ const Sync = () => {
                   </TableBody>
                 </Table>
               </CardContent>
+            </Card>
+          </TabsContent>
+          
+          <TabsContent value="reservations">
+            <Card>
+              <CardHeader>
+                <CardTitle>Synchronisation des réservations</CardTitle>
+                <CardDescription>État de la synchronisation des réservations de médicaments</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center p-3 border rounded-md">
+                      <div className="flex items-center">
+                        <Package className="h-5 w-5 mr-2 text-muted-foreground" />
+                        <div>
+                          <p className="font-medium">Réservations totales</p>
+                          <p className="text-sm text-muted-foreground">Nombre de réservations</p>
+                        </div>
+                      </div>
+                      <p className="text-xl font-bold">{reservationSyncData.total}</p>
+                    </div>
+                    
+                    <div className="flex justify-between items-center p-3 border rounded-md">
+                      <div className="flex items-center">
+                        <Clock className="h-5 w-5 mr-2 text-amber-500" />
+                        <div>
+                          <p className="font-medium">En attente de synchronisation</p>
+                          <p className="text-sm text-muted-foreground">Réservations à synchroniser</p>
+                        </div>
+                      </div>
+                      <p className="text-xl font-bold text-amber-500">{reservationSyncData.pending}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center p-3 border rounded-md">
+                      <div className="flex items-center">
+                        <WifiOff className="h-5 w-5 mr-2 text-muted-foreground" />
+                        <div>
+                          <p className="font-medium">Pharmacies hors ligne</p>
+                          <p className="text-sm text-muted-foreground">Appareils à synchroniser</p>
+                        </div>
+                      </div>
+                      <p className="text-xl font-bold">{reservationSyncData.offline}</p>
+                    </div>
+                    
+                    <div className="flex justify-between items-center p-3 border rounded-md">
+                      <div className="flex items-center">
+                        <RefreshCw className="h-5 w-5 mr-2 text-green-500" />
+                        <div>
+                          <p className="font-medium">Dernière synchronisation</p>
+                          <p className="text-sm text-muted-foreground">Réservations</p>
+                        </div>
+                      </div>
+                      <p className="text-muted-foreground">{formatTimeAgo(reservationSyncData.lastSync)}</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-muted p-4 rounded-lg">
+                  <h3 className="font-medium mb-2">Comment fonctionne la synchronisation des réservations ?</h3>
+                  <ul className="space-y-2 text-sm text-muted-foreground ml-5 list-disc">
+                    <li>Les réservations créées en ligne sont immédiatement synchronisées avec le serveur central.</li>
+                    <li>Les réservations créées hors ligne sont stockées localement et synchronisées dès que la connexion est rétablie.</li>
+                    <li>Les mises à jour de statut des réservations sont propagées à toutes les pharmacies connectées.</li>
+                    <li>Les réservations expirées sont automatiquement annulées après la période définie.</li>
+                    <li>Les conflits de réservation (même produit, même moment) sont gérés selon la politique de priorité configurée.</li>
+                  </ul>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button variant="outline" className="w-full" onClick={handleStartSync} disabled={syncInProgress}>
+                  <RefreshCw className={`mr-2 h-4 w-4 ${syncInProgress ? 'animate-spin' : ''}`} />
+                  Synchroniser les réservations maintenant
+                </Button>
+              </CardFooter>
             </Card>
           </TabsContent>
         </Tabs>

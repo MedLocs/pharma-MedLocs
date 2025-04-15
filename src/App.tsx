@@ -19,6 +19,7 @@ import Pharmacies from "./pages/Pharmacies";
 import Sync from "./pages/Sync";
 import Backup from "./pages/Backup";
 import Security from "./pages/Security";
+import Reservations from "./pages/Reservations";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const App = () => (
           <Route path="/sync" element={<Sync />} />
           <Route path="/backup" element={<Backup />} />
           <Route path="/security" element={<Security />} />
+          <Route path="/reservations" element={<Reservations />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

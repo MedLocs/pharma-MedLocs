@@ -14,6 +14,11 @@ import Analytics from "./pages/Analytics";
 import Customers from "./pages/Customers";
 import Messages from "./pages/Messages";
 import Settings from "./pages/Settings";
+import Suppliers from "./pages/Suppliers";
+import Pharmacies from "./pages/Pharmacies";
+import Sync from "./pages/Sync";
+import Backup from "./pages/Backup";
+import Security from "./pages/Security";
 
 const queryClient = new QueryClient();
 
@@ -21,8 +26,6 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <BrowserRouter>
-        <Toaster />
-        <Sonner />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/prescriptions" element={<Prescriptions />} />
@@ -33,9 +36,16 @@ const App = () => (
           <Route path="/customers" element={<Customers />} />
           <Route path="/messages" element={<Messages />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/suppliers" element={<Suppliers />} />
+          <Route path="/pharmacies" element={<Pharmacies />} />
+          <Route path="/sync" element={<Sync />} />
+          <Route path="/backup" element={<Backup />} />
+          <Route path="/security" element={<Security />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Toaster />
+        <Sonner />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

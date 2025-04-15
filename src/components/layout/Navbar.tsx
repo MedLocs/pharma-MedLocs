@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { Bell, Search, User, Settings, LogOut } from 'lucide-react';
+import { Bell, Search, User, Settings, LogOut, Wifi, WifiOff } from 'lucide-react';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,8 +13,25 @@ import {
   DropdownMenuSeparator, 
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
+import { Badge } from '@/components/ui/badge';
 
 export const Navbar = () => {
+  const [isOnline, setIsOnline] = React.useState(navigator.onLine);
+
+  React.useEffect(() => {
+    const handleOnlineStatus = () => {
+      setIsOnline(navigator.onLine);
+    };
+
+    window.addEventListener('online', handleOnlineStatus);
+    window.addEventListener('offline', handleOnlineStatus);
+
+    return () => {
+      window.removeEventListener('online', handleOnlineStatus);
+      window.removeEventListener('offline', handleOnlineStatus);
+    };
+  }, []);
+
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background px-6">
       <SidebarTrigger />
@@ -30,6 +48,18 @@ export const Navbar = () => {
       </div>
 
       <div className="flex items-center gap-2">
+        {isOnline ? (
+          <Badge className="bg-green-100 text-green-800 hover:bg-green-100 hidden sm:flex">
+            <Wifi className="h-3 w-3 mr-1" />
+            En ligne
+          </Badge>
+        ) : (
+          <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-100 hidden sm:flex">
+            <WifiOff className="h-3 w-3 mr-1" />
+            Hors ligne
+          </Badge>
+        )}
+        
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="relative">
@@ -66,8 +96,8 @@ export const Navbar = () => {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-8 w-8 rounded-full">
               <Avatar className="h-8 w-8">
-                <AvatarImage src="" alt="Pharmacie" />
-                <AvatarFallback>PH</AvatarFallback>
+                <AvatarImage src="/lovable-uploads/f0824aea-9430-47b8-a0da-a4784cb07566.png" alt="MedLocs" />
+                <AvatarFallback>ML</AvatarFallback>
               </Avatar>
             </Button>
           </DropdownMenuTrigger>

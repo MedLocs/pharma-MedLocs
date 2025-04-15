@@ -38,7 +38,7 @@ export const Sidebar = () => {
       <SidebarHeader className="border-b border-border/50 py-4">
         <div className="flex items-center gap-2 px-4">
           <div className="inline-flex h-10 w-10 items-center justify-center rounded-md">
-            <img src="/lovable-uploads/f0824aea-9430-47b8-a0da-a4784cb07566.png" alt="MedLocs" className="h-10 w-10" />
+            <img src="/uploads/f0824aea-9430-47b8-a0da-a4784cb07566.png" alt="MedLocs" className="h-10 w-10" />
           </div>
           <div className="font-bold text-xl text-primary">MedLocs</div>
         </div>
@@ -88,14 +88,14 @@ export const Sidebar = () => {
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-              <SidebarMenuItem>
+              {/* <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link to="/pharmacies" className={linkClass}>
                     <Store className="h-5 w-5" />
                     <span>Pharmacies</span>
                   </Link>
                 </SidebarMenuButton>
-              </SidebarMenuItem>
+              </SidebarMenuItem> */}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

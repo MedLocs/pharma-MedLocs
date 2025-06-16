@@ -154,7 +154,6 @@ const resources = {
       // Profile
       "my_account": "My Account",
       "profile": "Profile",
-      "logout": "Logout",
       
       // Product categories
       "analgesic": "Analgesic",
@@ -171,7 +170,6 @@ const resources = {
       "order_platform": "Order Platform",
       "available_products": "Available Products",
       "view_products": "View Products",
-      "place_order": "Place Order",
       "product_catalog": "Product Catalog",
       "add_to_cart": "Add to Cart",
       "cart": "Cart",
@@ -333,7 +331,6 @@ const resources = {
       // Profile
       "my_account": "Mon compte",
       "profile": "Profil",
-      "logout": "Déconnexion",
       
       // Product categories
       "analgesic": "Analgésique",
@@ -350,7 +347,6 @@ const resources = {
       "order_platform": "Plateforme de commande",
       "available_products": "Produits disponibles",
       "view_products": "Voir les produits",
-      "place_order": "Passer commande",
       "product_catalog": "Catalogue de produits",
       "add_to_cart": "Ajouter au panier",
       "cart": "Panier",

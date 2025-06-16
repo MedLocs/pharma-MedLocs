@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Bell, Search, User, Settings, LogOut, Wifi, WifiOff } from 'lucide-react';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
@@ -14,8 +15,12 @@ import {
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
+import { LanguageSelector } from '@/components/common/LanguageSelector';
+import { useAuth } from '@/contexts/AuthContext';
 
 export const Navbar = () => {
+  const { t } = useTranslation();
+  const { logout } = useAuth();
   const [isOnline, setIsOnline] = React.useState(navigator.onLine);
 
   React.useEffect(() => {
@@ -41,7 +46,7 @@ export const Navbar = () => {
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             type="search"
-            placeholder="Rechercher..."
+            placeholder={t('search') + "..."}
             className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
           />
         </form>
@@ -51,42 +56,44 @@ export const Navbar = () => {
         {isOnline ? (
           <Badge className="bg-green-100 text-green-800 hover:bg-green-100 hidden sm:flex">
             <Wifi className="h-3 w-3 mr-1" />
-            En ligne
+            {t('online')}
           </Badge>
         ) : (
           <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-100 hidden sm:flex">
             <WifiOff className="h-3 w-3 mr-1" />
-            Hors ligne
+            {t('offline')}
           </Badge>
         )}
+        
+        <LanguageSelector />
         
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="relative">
               <Bell className="h-5 w-5" />
               <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-destructive"></span>
-              <span className="sr-only">Notifications</span>
+              <span className="sr-only">{t('notifications')}</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+            <DropdownMenuLabel>{t('notifications')}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <div className="flex flex-col gap-1">
-                <p className="text-sm font-medium">Nouvelle ordonnance reçue</p>
-                <p className="text-xs text-muted-foreground">Il y a 5 minutes</p>
+                <p className="text-sm font-medium">{t('new_prescription_received')}</p>
+                <p className="text-xs text-muted-foreground">{t('5_minutes_ago')}</p>
               </div>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <div className="flex flex-col gap-1">
-                <p className="text-sm font-medium">Stock faible: Paracétamol</p>
-                <p className="text-xs text-muted-foreground">Il y a 1 heure</p>
+                <p className="text-sm font-medium">{t('low_stock_paracetamol')}</p>
+                <p className="text-xs text-muted-foreground">{t('1_hour_ago')}</p>
               </div>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <div className="flex flex-col gap-1">
-                <p className="text-sm font-medium">Message de Jean Dupont</p>
-                <p className="text-xs text-muted-foreground">Il y a 3 heures</p>
+                <p className="text-sm font-medium">{t('message_from_jean')}</p>
+                <p className="text-xs text-muted-foreground">{t('3_hours_ago')}</p>
               </div>
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -102,20 +109,20 @@ export const Navbar = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Mon compte</DropdownMenuLabel>
+            <DropdownMenuLabel>{t('my_account')}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <User className="mr-2 h-4 w-4" />
-              <span>Profil</span>
+              <span>{t('profile')}</span>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Settings className="mr-2 h-4 w-4" />
-              <span>Paramètres</span>
+              <span>{t('settings')}</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={logout}>
               <LogOut className="mr-2 h-4 w-4" />
-              <span>Déconnexion</span>
+              <span>{t('logout')}</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { 
   Clipboard, 
   Package, 
@@ -16,7 +17,8 @@ import {
   ShieldCheck,
   Database,
   Wifi,
-  WifiOff
+  WifiOff,
+  ShoppingBag
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { 
@@ -33,6 +35,8 @@ import {
 } from '@/components/ui/sidebar';
 
 export const Sidebar = () => {
+  const { t } = useTranslation();
+
   return (
     <SidebarComponent>
       <SidebarHeader className="border-b border-border/50 py-4">
@@ -52,7 +56,7 @@ export const Sidebar = () => {
                 <SidebarMenuButton asChild>
                   <Link to="/" className={linkClass} data-active={true}>
                     <Home className="h-5 w-5" />
-                    <span>Tableau de bord</span>
+                    <span>{t('dashboard')}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -60,7 +64,15 @@ export const Sidebar = () => {
                 <SidebarMenuButton asChild>
                   <Link to="/prescriptions" className={linkClass}>
                     <Clipboard className="h-5 w-5" />
-                    <span>Ordonnances</span>
+                    <span>{t('prescriptions')}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link to="/order-platform" className={linkClass}>
+                    <ShoppingBag className="h-5 w-5" />
+                    <span>{t('order_platform')}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -69,14 +81,14 @@ export const Sidebar = () => {
         </SidebarGroup>
         
         <SidebarGroup>
-          <SidebarGroupLabel>Inventaire</SidebarGroupLabel>
+          <SidebarGroupLabel>{t('inventory')}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link to="/inventory" className={linkClass}>
                     <Package className="h-5 w-5" />
-                    <span>Produits</span>
+                    <span>{t('products')}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -84,18 +96,18 @@ export const Sidebar = () => {
                 <SidebarMenuButton asChild>
                   <Link to="/suppliers" className={linkClass}>
                     <Truck className="h-5 w-5" />
-                    <span>Fournisseurs</span>
+                    <span>{t('suppliers')}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-              {/* <SidebarMenuItem>
+              <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link to="/pharmacies" className={linkClass}>
                     <Store className="h-5 w-5" />
-                    <span>Pharmacies</span>
+                    <span>{t('pharmacies')}</span>
                   </Link>
                 </SidebarMenuButton>
-              </SidebarMenuItem> */}
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -108,7 +120,7 @@ export const Sidebar = () => {
                 <SidebarMenuButton asChild>
                   <Link to="/payments" className={linkClass}>
                     <CreditCard className="h-5 w-5" />
-                    <span>Paiements</span>
+                    <span>{t('payments')}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -116,7 +128,7 @@ export const Sidebar = () => {
                 <SidebarMenuButton asChild>
                   <Link to="/promotions" className={linkClass}>
                     <Tag className="h-5 w-5" />
-                    <span>Promotions</span>
+                    <span>{t('promotions')}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -132,7 +144,7 @@ export const Sidebar = () => {
                 <SidebarMenuButton asChild>
                   <Link to="/analytics" className={linkClass}>
                     <BarChart className="h-5 w-5" />
-                    <span>Analytiques</span>
+                    <span>{t('analytics')}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -140,7 +152,7 @@ export const Sidebar = () => {
                 <SidebarMenuButton asChild>
                   <Link to="/backup" className={linkClass}>
                     <Database className="h-5 w-5" />
-                    <span>Sauvegarde</span>
+                    <span>{t('backup')}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -156,7 +168,7 @@ export const Sidebar = () => {
                 <SidebarMenuButton asChild>
                   <Link to="/customers" className={linkClass}>
                     <Users className="h-5 w-5" />
-                    <span>Clients</span>
+                    <span>{t('customers')}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -164,7 +176,7 @@ export const Sidebar = () => {
                 <SidebarMenuButton asChild>
                   <Link to="/messages" className={linkClass}>
                     <MessageSquare className="h-5 w-5" />
-                    <span>Messages</span>
+                    <span>{t('messages')}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -180,7 +192,7 @@ export const Sidebar = () => {
                 <SidebarMenuButton asChild>
                   <Link to="/settings" className={linkClass}>
                     <Settings className="h-5 w-5" />
-                    <span>Paramètres</span>
+                    <span>{t('settings')}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -188,7 +200,7 @@ export const Sidebar = () => {
                 <SidebarMenuButton asChild>
                   <Link to="/security" className={linkClass}>
                     <ShieldCheck className="h-5 w-5" />
-                    <span>Sécurité</span>
+                    <span>{t('security')}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -199,7 +211,7 @@ export const Sidebar = () => {
                       <Wifi className="h-5 w-5 text-green-500" />
                       <WifiOff className="h-5 w-5 ml-1 text-muted-foreground" />
                     </div>
-                    <span>Synchronisation</span>
+                    <span>{t('synchronization')}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

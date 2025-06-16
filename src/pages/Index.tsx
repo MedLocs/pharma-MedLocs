@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Layout } from '@/components/layout/Layout';
 import { StatCard } from '@/components/dashboard/StatCard';
 import { SalesChart } from '@/components/dashboard/SalesChart';
@@ -8,39 +9,41 @@ import { LowStockAlerts } from '@/components/dashboard/LowStockAlerts';
 import { Clipboard, Package, CreditCard, Users } from 'lucide-react';
 
 const Index = () => {
+  const { t } = useTranslation();
+
   return (
     <Layout>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold tracking-tight">Tableau de bord</h1>
+        <h1 className="text-3xl font-bold tracking-tight">{t('dashboard')}</h1>
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         <StatCard 
-          title="Ordonnances" 
+          title={t('prescriptions')} 
           value="127" 
           icon={<Clipboard className="h-6 w-6" />} 
-          description="23 en attente de traitement" 
+          description={t('pending_prescriptions')} 
           change={12}
         />
         <StatCard 
-          title="Stock" 
+          title={t('stock')} 
           value="1,432" 
           icon={<Package className="h-6 w-6" />} 
-          description="5 produits en stock faible" 
+          description={t('5_low_stock')} 
           change={-3}
         />
         <StatCard 
-          title="Ventes" 
+          title={t('sales')} 
           value="€8,521" 
           icon={<CreditCard className="h-6 w-6" />} 
-          description="Pour le mois en cours" 
+          description={t('current_month')} 
           change={8}
         />
         <StatCard 
-          title="Clients" 
+          title={t('clients')} 
           value="487" 
           icon={<Users className="h-6 w-6" />} 
-          description="32 nouveaux ce mois-ci" 
+          description={t('new_this_month')} 
           change={15}
         />
       </div>

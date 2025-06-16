@@ -18,7 +18,8 @@ import {
   Database,
   Wifi,
   WifiOff,
-  ShoppingBag
+  ShoppingBag,
+  Calendar
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { 
@@ -49,7 +50,7 @@ export const Sidebar = () => {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Principal</SidebarGroupLabel>
+          <SidebarGroupLabel>{t('dashboard')}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
@@ -65,6 +66,14 @@ export const Sidebar = () => {
                   <Link to="/prescriptions" className={linkClass}>
                     <Clipboard className="h-5 w-5" />
                     <span>{t('prescriptions')}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link to="/reservations" className={linkClass}>
+                    <Calendar className="h-5 w-5" />
+                    <span>{t('reservations')}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -113,7 +122,7 @@ export const Sidebar = () => {
         </SidebarGroup>
         
         <SidebarGroup>
-          <SidebarGroupLabel>Commercial</SidebarGroupLabel>
+          <SidebarGroupLabel>{t('orders')}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
@@ -137,7 +146,7 @@ export const Sidebar = () => {
         </SidebarGroup>
         
         <SidebarGroup>
-          <SidebarGroupLabel>Données & Analyses</SidebarGroupLabel>
+          <SidebarGroupLabel>{t('analytics')}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
@@ -161,7 +170,7 @@ export const Sidebar = () => {
         </SidebarGroup>
         
         <SidebarGroup>
-          <SidebarGroupLabel>Utilisateurs</SidebarGroupLabel>
+          <SidebarGroupLabel>{t('customers')}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
@@ -185,7 +194,7 @@ export const Sidebar = () => {
         </SidebarGroup>
         
         <SidebarGroup>
-          <SidebarGroupLabel>Système</SidebarGroupLabel>
+          <SidebarGroupLabel>{t('settings')}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>

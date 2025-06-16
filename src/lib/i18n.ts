@@ -22,6 +22,7 @@ const resources = {
       "security": "Security",
       "backup": "Backup",
       "synchronization": "Synchronization",
+      "reservations": "Reservations",
       
       // Common actions
       "add": "Add",
@@ -40,9 +41,15 @@ const resources = {
       "view": "View",
       "order": "Order",
       "place_order": "Place Order",
+      "approve": "Approve",
+      "reject": "Reject",
+      "complete": "Complete",
+      "confirm": "Confirm",
+      "details": "Details",
       
       // Dashboard
       "welcome": "Welcome to MedLocs",
+      "welcome_back": "Welcome back",
       "total_products": "Total Products",
       "products_in_stock": "Products in stock",
       "low_stock_alerts": "Low Stock Alerts",
@@ -55,6 +62,9 @@ const resources = {
       "new_this_month": "32 new this month",
       "sales": "Sales",
       "clients": "Clients",
+      "orders_today": "Orders Today",
+      "revenue_this_month": "Revenue This Month",
+      "active_customers": "Active Customers",
       
       // Inventory
       "inventory_management": "Inventory Management",
@@ -69,8 +79,12 @@ const resources = {
       "actions": "Actions",
       "units": "units",
       "no_products_found": "No products found for the specified criteria.",
+      "restock": "Restock",
+      "out_of_stock": "Out of Stock",
+      "low_stock": "Low Stock",
+      "in_stock": "In Stock",
       
-      // Orders
+      // Orders & Reservations
       "orders": "Orders",
       "order_management": "Order Management",
       "new_order": "New Order",
@@ -86,6 +100,19 @@ const resources = {
       "shipped": "Shipped",
       "delivered": "Delivered",
       "cancelled": "Cancelled",
+      "reservation_management": "Reservation Management",
+      "new_reservation": "New Reservation",
+      "reservation_details": "Reservation Details",
+      "pickup_code": "Pickup Code",
+      "expires_on": "Expires on",
+      "reserved_by": "Reserved by",
+      "customer_name": "Customer Name",
+      "pharmacy_name": "Pharmacy Name",
+      "reservation_notes": "Notes",
+      "ready_for_pickup": "Ready for Pickup",
+      "mark_as_ready": "Mark as Ready",
+      "mark_as_completed": "Mark as Completed",
+      "prescription_required": "Prescription Required",
       
       // Authentication
       "sign_in": "Sign In",
@@ -100,13 +127,18 @@ const resources = {
       "create_account": "Create Account",
       "sign_in_to_account": "Sign in to your account",
       "create_new_account": "Create a new account",
+      "full_name": "Full Name",
+      "account_type": "Account Type",
+      "administrator": "Administrator",
+      "pharmacy": "Pharmacy",
+      "supplier": "Supplier",
+      "select_type": "Select a type",
       
       // Pharmacies
       "pharmacy_management": "Pharmacy Management",
       "add_pharmacy": "Add Pharmacy",
       "pharmacy_list": "Pharmacy List",
       "manage_pharmacy_network": "Manage your pharmacy network and inventory",
-      "pharmacy": "Pharmacy",
       "location": "Location",
       "contact": "Contact",
       "stock_status": "Stock Status",
@@ -178,7 +210,33 @@ const resources = {
       "subtotal": "Subtotal",
       "total": "Total",
       "empty_cart": "Your cart is empty",
-      "continue_shopping": "Continue Shopping"
+      "continue_shopping": "Continue Shopping",
+      "proceed_to_checkout": "Proceed to Checkout",
+      "order_summary": "Order Summary",
+      "billing_information": "Billing Information",
+      "shipping_address": "Shipping Address",
+      "payment_method": "Payment Method",
+      "place_your_order": "Place Your Order",
+      "order_placed_successfully": "Order placed successfully!",
+      "your_order_number": "Your order number is",
+      
+      // Professional content
+      "trusted_by_pharmacies": "Trusted by 500+ pharmacies nationwide",
+      "streamline_operations": "Streamline your pharmacy operations",
+      "real_time_inventory": "Real-time inventory management",
+      "secure_platform": "Secure and compliant platform",
+      "24_7_support": "24/7 customer support",
+      "easy_integration": "Easy integration with existing systems",
+      "advanced_analytics": "Advanced analytics and reporting",
+      "cost_effective": "Cost-effective solution",
+      "get_started_today": "Get Started Today",
+      "request_demo": "Request Demo",
+      "learn_more": "Learn More",
+      "why_choose_medlocs": "Why Choose MedLocs?",
+      "comprehensive_solution": "Comprehensive pharmacy management solution",
+      "increase_efficiency": "Increase operational efficiency by 40%",
+      "reduce_costs": "Reduce operational costs significantly",
+      "improve_patient_care": "Improve patient care and satisfaction"
     }
   },
   fr: {
@@ -199,6 +257,7 @@ const resources = {
       "security": "Sécurité",
       "backup": "Sauvegarde",
       "synchronization": "Synchronisation",
+      "reservations": "Réservations",
       
       // Common actions
       "add": "Ajouter",
@@ -217,9 +276,15 @@ const resources = {
       "view": "Voir",
       "order": "Commander",
       "place_order": "Passer commande",
+      "approve": "Approuver",
+      "reject": "Rejeter",
+      "complete": "Terminer",
+      "confirm": "Confirmer",
+      "details": "Détails",
       
       // Dashboard
       "welcome": "Bienvenue sur MedLocs",
+      "welcome_back": "Content de vous revoir",
       "total_products": "Total des produits",
       "products_in_stock": "Produits en stock",
       "low_stock_alerts": "Produits en alerte",
@@ -232,6 +297,9 @@ const resources = {
       "new_this_month": "32 nouveaux ce mois-ci",
       "sales": "Ventes",
       "clients": "Clients",
+      "orders_today": "Commandes Aujourd'hui",
+      "revenue_this_month": "Revenus Ce Mois",
+      "active_customers": "Clients Actifs",
       
       // Inventory
       "inventory_management": "Gestion de l'inventaire",
@@ -246,8 +314,12 @@ const resources = {
       "actions": "Actions",
       "units": "unités",
       "no_products_found": "Aucun produit trouvé pour les critères spécifiés.",
+      "restock": "Réapprovisionner",
+      "out_of_stock": "Rupture de Stock",
+      "low_stock": "Stock Faible",
+      "in_stock": "En Stock",
       
-      // Orders
+      // Orders & Reservations
       "orders": "Commandes",
       "order_management": "Gestion des commandes",
       "new_order": "Nouvelle commande",
@@ -263,6 +335,19 @@ const resources = {
       "shipped": "Expédié",
       "delivered": "Livré",
       "cancelled": "Annulé",
+      "reservation_management": "Gestion des Réservations",
+      "new_reservation": "Nouvelle Réservation",
+      "reservation_details": "Détails de la Réservation",
+      "pickup_code": "Code de Récupération",
+      "expires_on": "Expire le",
+      "reserved_by": "Réservé par",
+      "customer_name": "Nom du Client",
+      "pharmacy_name": "Nom de la Pharmacie",
+      "reservation_notes": "Notes",
+      "ready_for_pickup": "Prêt à Récupérer",
+      "mark_as_ready": "Marquer comme Prêt",
+      "mark_as_completed": "Marquer comme Terminé",
+      "prescription_required": "Ordonnance Requise",
       
       // Authentication
       "sign_in": "Connexion",
@@ -277,13 +362,18 @@ const resources = {
       "create_account": "Créer un compte",
       "sign_in_to_account": "Connectez-vous à votre compte",
       "create_new_account": "Créer un nouveau compte",
+      "full_name": "Nom Complet",
+      "account_type": "Type de Compte",
+      "administrator": "Administrateur",
+      "pharmacy": "Pharmacie",
+      "supplier": "Fournisseur",
+      "select_type": "Sélectionner un type",
       
       // Pharmacies
       "pharmacy_management": "Gestion des pharmacies",
       "add_pharmacy": "Ajouter une pharmacie",
       "pharmacy_list": "Liste des pharmacies",
       "manage_pharmacy_network": "Gérez votre réseau de pharmacies et leur inventaire",
-      "pharmacy": "Pharmacie",
       "location": "Localisation",
       "contact": "Contact",
       "stock_status": "Statut du stock",
@@ -355,7 +445,33 @@ const resources = {
       "subtotal": "Sous-total",
       "total": "Total",
       "empty_cart": "Votre panier est vide",
-      "continue_shopping": "Continuer les achats"
+      "continue_shopping": "Continuer les achats",
+      "proceed_to_checkout": "Procéder au Checkout",
+      "order_summary": "Résumé de la Commande",
+      "billing_information": "Informations de Facturation",
+      "shipping_address": "Adresse de Livraison",
+      "payment_method": "Méthode de Paiement",
+      "place_your_order": "Passer Votre Commande",
+      "order_placed_successfully": "Commande passée avec succès!",
+      "your_order_number": "Votre numéro de commande est",
+      
+      // Professional content
+      "trusted_by_pharmacies": "Fait confiance par 500+ pharmacies à l'échelle nationale",
+      "streamline_operations": "Rationalisez vos opérations de pharmacie",
+      "real_time_inventory": "Gestion d'inventaire en temps réel",
+      "secure_platform": "Plateforme sécurisée et conforme",
+      "24_7_support": "Support client 24/7",
+      "easy_integration": "Intégration facile avec les systèmes existants",
+      "advanced_analytics": "Analyses et rapports avancés",
+      "cost_effective": "Solution rentable",
+      "get_started_today": "Commencez Aujourd'hui",
+      "request_demo": "Demander une Démo",
+      "learn_more": "En Savoir Plus",
+      "why_choose_medlocs": "Pourquoi Choisir MedLocs?",
+      "comprehensive_solution": "Solution complète de gestion de pharmacie",
+      "increase_efficiency": "Augmentez l'efficacité opérationnelle de 40%",
+      "reduce_costs": "Réduisez considérablement les coûts opérationnels",
+      "improve_patient_care": "Améliorez les soins et la satisfaction des patients"
     }
   }
 };
@@ -365,7 +481,7 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    fallbackLng: 'fr',
+    fallbackLng: 'en',
     debug: true,
     interpolation: {
       escapeValue: false,

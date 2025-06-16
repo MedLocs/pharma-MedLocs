@@ -10,6 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/components/ui/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { LanguageSelector } from '@/components/common/LanguageSelector';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle, Shield, TrendingUp, Users } from 'lucide-react';
 
 const Register = () => {
   const { t } = useTranslation();
@@ -33,8 +35,8 @@ const Register = () => {
     
     if (!formData.name || !formData.email || !formData.password || !formData.role) {
       toast({
-        title: "Erreur de validation",
-        description: "Veuillez remplir tous les champs",
+        title: t('validation_error'),
+        description: t('please_fill_all_fields'),
         variant: "destructive"
       });
       return;
@@ -42,8 +44,8 @@ const Register = () => {
 
     if (formData.password !== formData.confirmPassword) {
       toast({
-        title: "Erreur de validation",
-        description: "Les mots de passe ne correspondent pas",
+        title: t('validation_error'),
+        description: t('passwords_do_not_match'),
         variant: "destructive"
       });
       return;
@@ -53,111 +55,185 @@ const Register = () => {
     if (success) {
       toast({
         title: t('register'),
-        description: "Compte créé avec succès",
+        description: t('account_created_successfully'),
       });
       navigate('/');
     } else {
       toast({
-        title: "Erreur d'inscription",
-        description: "Une erreur est survenue lors de la création du compte",
+        title: t('registration_error'),
+        description: t('error_creating_account'),
         variant: "destructive"
       });
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center">
-            <img src="/uploads/f0824aea-9430-47b8-a0da-a4784cb07566.png" alt="MedLocs" className="h-8 w-8 mr-2" />
-            <h2 className="text-2xl font-bold text-primary">MedLocs</h2>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="flex flex-col lg:flex-row min-h-screen">
+        {/* Left Side - Branding */}
+        <div className="lg:w-1/2 bg-gradient-to-br from-blue-600 to-indigo-800 p-8 flex flex-col justify-center text-white">
+          <div className="max-w-md mx-auto">
+            <div className="flex items-center mb-8">
+              <img src="/uploads/f0824aea-9430-47b8-a0da-a4784cb07566.png" alt="MedLocs" className="h-12 w-12 mr-3" />
+              <h1 className="text-3xl font-bold">MedLocs</h1>
+            </div>
+            
+            <h2 className="text-4xl font-bold mb-6">{t('why_choose_medlocs')}</h2>
+            <p className="text-xl opacity-90 mb-8">{t('comprehensive_solution')}</p>
+            
+            <div className="space-y-6">
+              <div className="flex items-start">
+                <TrendingUp className="h-6 w-6 mr-4 mt-1 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-lg">{t('increase_efficiency')}</h3>
+                  <p className="opacity-80">{t('streamline_operations')}</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start">
+                <Shield className="h-6 w-6 mr-4 mt-1 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-lg">{t('secure_platform')}</h3>
+                  <p className="opacity-80">{t('data_protection_compliance')}</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start">
+                <Users className="h-6 w-6 mr-4 mt-1 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-lg">{t('trusted_by_pharmacies')}</h3>
+                  <p className="opacity-80">{t('join_growing_network')}</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-8 flex gap-3">
+              <Badge className="bg-white/20 text-white hover:bg-white/30">
+                <CheckCircle className="mr-1 h-3 w-3" />
+                {t('24_7_support')}
+              </Badge>
+              <Badge className="bg-white/20 text-white hover:bg-white/30">
+                <CheckCircle className="mr-1 h-3 w-3" />
+                {t('easy_integration')}
+              </Badge>
+              <Badge className="bg-white/20 text-white hover:bg-white/30">
+                <CheckCircle className="mr-1 h-3 w-3" />
+                {t('cost_effective')}
+              </Badge>
+            </div>
           </div>
-          <LanguageSelector />
         </div>
-        
-        <Card>
-          <CardHeader>
-            <CardTitle>{t('sign_up')}</CardTitle>
-            <CardDescription>{t('create_new_account')}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="name">Nom complet</Label>
-                <Input
-                  id="name"
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) => handleChange('name', e.target.value)}
-                  placeholder="Jean Dupont"
-                  required
-                />
+
+        {/* Right Side - Registration Form */}
+        <div className="lg:w-1/2 p-8 flex items-center justify-center">
+          <div className="w-full max-w-md space-y-8">
+            <div className="flex justify-between items-center">
+              <div>
+                <h2 className="text-3xl font-bold text-gray-900">{t('get_started_today')}</h2>
+                <p className="text-gray-600 mt-2">{t('create_new_account')}</p>
               </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="email">{t('email')}</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => handleChange('email', e.target.value)}
-                  placeholder="jean@exemple.com"
-                  required
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="role">Type de compte</Label>
-                <Select value={formData.role} onValueChange={(value) => handleChange('role', value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Sélectionner un type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="admin">Administrateur</SelectItem>
-                    <SelectItem value="pharmacy">Pharmacie</SelectItem>
-                    <SelectItem value="supplier">Fournisseur</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="password">{t('password')}</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={(e) => handleChange('password', e.target.value)}
-                  placeholder="********"
-                  required
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="confirmPassword">{t('confirm_password')}</Label>
-                <Input
-                  id="confirmPassword"
-                  type="password"
-                  value={formData.confirmPassword}
-                  onChange={(e) => handleChange('confirmPassword', e.target.value)}
-                  placeholder="********"
-                  required
-                />
-              </div>
-              
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "..." : t('create_account')}
-              </Button>
-              
-              <div className="text-center">
-                <span className="text-sm text-muted-foreground">{t('already_have_account')} </span>
-                <Link to="/login" className="text-sm text-primary hover:underline">
-                  {t('sign_in')}
-                </Link>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
+              <LanguageSelector />
+            </div>
+            
+            <Card className="shadow-lg border-0">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-xl">{t('sign_up')}</CardTitle>
+                <CardDescription>{t('join_thousands_of_pharmacies')}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="name">{t('full_name')}</Label>
+                    <Input
+                      id="name"
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) => handleChange('name', e.target.value)}
+                      placeholder="John Doe"
+                      className="h-11"
+                      required
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="email">{t('email')}</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => handleChange('email', e.target.value)}
+                      placeholder="john@example.com"
+                      className="h-11"
+                      required
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="role">{t('account_type')}</Label>
+                    <Select value={formData.role} onValueChange={(value) => handleChange('role', value)}>
+                      <SelectTrigger className="h-11">
+                        <SelectValue placeholder={t('select_type')} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="admin">{t('administrator')}</SelectItem>
+                        <SelectItem value="pharmacy">{t('pharmacy')}</SelectItem>
+                        <SelectItem value="supplier">{t('supplier')}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="password">{t('password')}</Label>
+                    <Input
+                      id="password"
+                      type="password"
+                      value={formData.password}
+                      onChange={(e) => handleChange('password', e.target.value)}
+                      placeholder="••••••••"
+                      className="h-11"
+                      required
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="confirmPassword">{t('confirm_password')}</Label>
+                    <Input
+                      id="confirmPassword"
+                      type="password"
+                      value={formData.confirmPassword}
+                      onChange={(e) => handleChange('confirmPassword', e.target.value)}
+                      placeholder="••••••••"
+                      className="h-11"
+                      required
+                    />
+                  </div>
+                  
+                  <Button type="submit" className="w-full h-11 text-base" disabled={isLoading}>
+                    {isLoading ? (
+                      <div className="flex items-center">
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                        {t('creating_account')}...
+                      </div>
+                    ) : (
+                      t('create_account')
+                    )}
+                  </Button>
+                  
+                  <div className="text-center pt-4">
+                    <span className="text-sm text-muted-foreground">{t('already_have_account')} </span>
+                    <Link to="/login" className="text-sm text-primary hover:underline font-medium">
+                      {t('sign_in')}
+                    </Link>
+                  </div>
+                </form>
+              </CardContent>
+            </Card>
+            
+            <div className="text-center text-xs text-gray-500">
+              <p>{t('terms_and_privacy_notice')}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
